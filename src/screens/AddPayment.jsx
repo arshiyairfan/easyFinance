@@ -1,7 +1,30 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+
 
 const AddPayment = () => {
+    const [name,setName]=useState();
+    const [voucher,setVoucher]=useState();
+    const [DC,setDC]=useState();
+    const [Account,setAccount]=useState();
+    const [Debit,setDebit]=useState();
+    const [Credit,setCredit]=useState();
+    const [Narration,setNarration]=useState();
+    
+    const print=()=>{
+        const data={
+            name,
+            voucher,
+            DC,
+            Account,
+            Debit,
+            Credit,
+            Narration
+        }
+        console.log(data)
+
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -14,7 +37,8 @@ const AddPayment = () => {
                     <Text style={styles.textStyle}>Date</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Date"
-                        selection={{ start: 0, end: 0 }}
+                        value={name}
+                        onChangeText={setName}
                     ></TextInput>
 
 
@@ -22,42 +46,49 @@ const AddPayment = () => {
                     <TextInput style={styles.box}
 
                         placeholder="Enter Voucher No."
-                        selection={{ start: 0, end: 0 }}
+                        value={voucher}
+                        onChangeText={setVoucher}
+
                     ></TextInput>
 
 
                     <Text style={styles.textStyle}>D/C</Text>
                     <TextInput style={styles.box}
                         placeholder="Debit/Credit"
-                        selection={{ start: 0, end: 0 }}
+                        value={DC}
+                        onChangeText={setDC}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Account</Text>
                     <TextInput style={styles.box}
                         placeholder="Account"
-                        selection={{ start: 0, end: 0 }}
+                        value={Account}
+                        onChangeText={setAccount}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Debit (Rs.)</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={Debit}
+                        onChangeText={setDebit}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Credit (Rs.)</Text>
                     <TextInput style={styles.box}
                         placeholder=" Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={Credit}
+                        onChangeText={setCredit}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Short Narrations</Text>
                     <TextInput style={styles.box}
                         placeholder=" Bill and Book no."
-                        selection={{ start: 0, end: 0 }}
+                        value={Narration}
+                        onChangeText={setNarration}
                     ></TextInput>
 
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={print}>
                         <Text style={styles.buttonText}>save</Text>
                     </TouchableOpacity>
 

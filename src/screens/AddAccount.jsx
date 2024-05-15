@@ -1,31 +1,42 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import colors from '../constants/globalStyles'
 import { useNavigation } from '@react-navigation/native'
 
 const AddAccount = () => {
     const navigation = useNavigation();
+    const [name,setName]=useState();
+    const [group,setGroup]=useState();
     const navigate = ()=>{
         navigation.navigate("Add Item")
     }
+    const print=()=>{
+        const accountData ={
+            name,
+            group
+        }
+        console.log(accountData)
+    }
+    
     return (
         <View style={{ flex: 1, backgroundColor: colors.primary }}>
             <View style={styles.semiCircle}></View>
-             <Text style={styles.headingText}> Add Account </Text>
+             <Text style={styles.headingText}>Add Account</Text>
             <Text style={styles.textStyle}>Name</Text>
             <TextInput style={styles.box}
                 placeholder="Enter name"
-                selection={{ start: 0, end: 0 }}
+                value={name}
+                onChangeText={setName}
             />
 
             <Text style={styles.textStyle}>Group</Text>
             <TextInput style={styles.box}
-
                 placeholder="Creditor/Debitor"
-           
-                selection={{ start: 0, end: 0 }}
+                value={group}
+                onChangeText={setGroup}
+
             />
-            <TouchableOpacity style={styles.button} onPress={navigate}>
+            <TouchableOpacity style={styles.button} onPress={print}>
                 <Text style={styles.buttonText}>save</Text>
             </TouchableOpacity>
 
