@@ -1,20 +1,50 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+
+
+
 
 const AddReceipt = () => {
+
+
+    const [Date, setDate] = useState();
+const [Voucher, setVoucher] = useState();
+const [DC, setDC] = useState();
+const [Account, setAccount] = useState();
+const [Debit, setDebit] = useState();
+const [Credit, setCredit] = useState();
+const [Narration, setNarration] = useState();
+
+
+const print = () => {
+    const ReceiptData = {
+
+        Date,
+        Voucher,
+        DC,
+        Account,
+        Debit,
+        Credit,
+        Narration
+    }
+    console.log(ReceiptData)
+}
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
-                <View style={{ flex: 1, backgroundColor: colors.primary}}>
-                    
+                <View style={{ flex: 1, backgroundColor: colors.primary }}>
+
 
                     <Text style={styles.headingText}> Add Receipt</Text>
 
                     <Text style={styles.textStyle}>Date</Text>
                     <TextInput style={styles.box}
                         placeholder="Date"
-                        selection={{ start: 0, end: 0 }}
+                        value={Date}
+                        onChangeText={setDate}
+
                     ></TextInput>
 
 
@@ -22,41 +52,54 @@ const AddReceipt = () => {
                     <TextInput style={styles.box}
                         placeholder="Enter Voucher no."
                         selection={{ start: 0, end: 0 }}
+                        value={Voucher}
+                        onChangeText={setVoucher}
+
                     ></TextInput>
 
 
                     <Text style={styles.textStyle}>D/C</Text>
                     <TextInput style={styles.box}
                         placeholder="Debit/Credit"
-                        selection={{ start: 0, end: 0 }}
+                        value={DC}
+                        onChangeText={setDC}
+
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Account</Text>
                     <TextInput style={styles.box}
                         placeholder="Account"
-                        selection={{ start: 0, end: 0 }}
+                        value={Account}
+                        onChangeText={setAccount}
+
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Debit (Rs.)</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={Debit}
+                        onChangeText={setDebit}
+
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Credit (Rs.)</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={Credit}
+                        onChangeText={setCredit}
+
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Short Narrations</Text>
                     <TextInput style={styles.box}
                         placeholder="Bill and book no"
-                        selection={{ start: 0, end: 0 }}
+                        value={Narration}
+                        onChangeText={setNarration}
+
                     ></TextInput>
 
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={print}>
                         <Text style={styles.buttonText}>save</Text>
                     </TouchableOpacity>
 
@@ -107,9 +150,9 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 9, // for Android,
         fontSize: 15,
-        paddingLeft:20,
-        fontSize:17
-        
+        paddingLeft: 20,
+        fontSize: 17
+
     },
     textStyle: {
 
@@ -151,7 +194,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 95,
         marginBottom: 25,
-        marginTop:50
+        marginTop: 50
     },
     scrollView: {
         backgroundColor: 'pink',

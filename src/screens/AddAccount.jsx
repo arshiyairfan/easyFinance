@@ -2,26 +2,40 @@ import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity } fr
 import React, { useState } from 'react'
 import colors from '../constants/globalStyles'
 import { useNavigation } from '@react-navigation/native'
+import Dropdown from '../components/Dropdown'
+
+
+const options = [
+    { label: 'Debitor', value: '1' },
+    { label: 'Creditor', value: '2' },
+
+];
+
 
 const AddAccount = () => {
     const navigation = useNavigation();
-    const [name,setName]=useState();
-    const [group,setGroup]=useState();
-    const navigate = ()=>{
+    const [name, setName] = useState();
+    const [group, setGroup] = useState();
+    const navigate = () => {
         navigation.navigate("Add Item")
     }
-    const print=()=>{
-        const accountData ={
+
+    const handleSelect = (option) => {
+        console.log('Selected option:', option);
+    };
+
+    const print = () => {
+        const accountData = {
             name,
             group
         }
         console.log(accountData)
     }
-    
+
     return (
         <View style={{ flex: 1, backgroundColor: colors.primary }}>
             <View style={styles.semiCircle}></View>
-             <Text style={styles.headingText}>Add Account</Text>
+            <Text style={styles.headingText}>Add Account</Text>
             <Text style={styles.textStyle}>Name</Text>
             <TextInput style={styles.box}
                 placeholder="Enter name"
@@ -30,12 +44,8 @@ const AddAccount = () => {
             />
 
             <Text style={styles.textStyle}>Group</Text>
-            <TextInput style={styles.box}
-                placeholder="Creditor/Debitor"
-                value={group}
-                onChangeText={setGroup}
+            <Dropdown  options={options} onSelect={handleSelect} />
 
-            />
             <TouchableOpacity style={styles.button} onPress={print}>
                 <Text style={styles.buttonText}>save</Text>
             </TouchableOpacity>
@@ -84,9 +94,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 9, // for Android,
-        fontSize:15 ,
-        paddingLeft:20,
-        fontSize:17
+        fontSize: 15,
+        paddingLeft: 20,
+        fontSize: 17
     },
     textStyle: {
 
@@ -121,12 +131,14 @@ const styles = StyleSheet.create({
         padding: 18,
         marginLeft: 120
     },
-    headingText:{
-        fontSize:40,
-        color:colors.light,
-        fontWeight:'bold',
-        marginLeft:90,
-      marginBottom:25
-    }
+    headingText: {
+        fontSize: 40,
+        color: colors.light,
+        fontWeight: 'bold',
+        marginLeft: 90,
+        marginBottom: 25
+    },
+
+
 
 })

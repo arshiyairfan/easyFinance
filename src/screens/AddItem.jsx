@@ -1,56 +1,94 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import SearchDropdown from '../components/SearchDropdown';
+
+
+ const options = [
+        { label: 'Option 1', value: '1' },
+        { label: 'Option 2', value: '2' },
+        { label: 'Option 3', value: '3' },
+        // Add more options as needed
+    ];
 
 const AddItem = () => {
+    const [Name, setName] = useState();
+    const [Group, setGroup] = useState();
+    const [Unit, setUnit] = useState();
+    const [Quantity, setQuantity] = useState();
+    const [SalePrice, setSalePrice] = useState();
+
+   
+
+    const handleSelect = (option) => {
+        console.log('Selected option:', option);
+    };
+
+
+    const print = () => {
+
+      
+
+        const itemData = {
+            Name,
+            Group,
+            Unit,
+            Quantity,
+            SalePrice
+        }
+        console.log(itemData)
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          
-<View style={{ flex: 1, backgroundColor: colors.primary }}>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+
+                <View style={{ flex: 1, backgroundColor: colors.primary }}>
                     <View style={styles.semiCircle}></View>
 
                     <Text style={styles.headingText}> Add Item </Text>
+
                     <Text style={styles.textStyle}>Name</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Enter Name"
-                        selection={{ start: 0, end: 0 }}
-                    ></TextInput>
+                    <SearchDropdown options={options} onSelect={handleSelect} />
 
 
                     <Text style={styles.textStyle}>Group</Text>
                     <TextInput style={styles.box}
 
                         placeholder="Creditor/Debitor"
-                        selection={{ start: 0, end: 0 }}
+                        value={Group}
+                        onChangeText={setGroup}
                     ></TextInput>
 
 
                     <Text style={styles.textStyle}>Unit</Text>
                     <TextInput style={styles.box}
                         placeholder="Pcs/Set/Dozen"
-                        selection={{ start: 0, end: 0 }}
+                        value={Unit}
+                        onChangeText={setUnit}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Stock (Qty)</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Quantity"
-                        selection={{ start: 0, end: 0 }}
+                        value={Quantity}
+                        onChangeText={setQuantity}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Sales Price</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={SalePrice}
+                        onChangeText={setSalePrice}
                     ></TextInput>
 
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={print}>
                         <Text style={styles.buttonText}>save</Text>
                     </TouchableOpacity>
 
                 </View>
-        </ScrollView>
-      </SafeAreaView>
+            </ScrollView>
+        </SafeAreaView>
 
     )
 }
@@ -95,8 +133,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 9, // for Android,
-        paddingLeft:20,
-        fontSize:17
+        paddingLeft: 20,
+        fontSize: 17
     },
     textStyle: {
 
@@ -123,7 +161,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 9, // for Android
         marginTop: 45,
-        marginBottom:40
+        marginBottom: 40
     },
     buttonText: {
         color: 'white',
@@ -145,5 +183,5 @@ const styles = StyleSheet.create({
     },
     scrollViewContent: {
         flexGrow: 1,
-      },
+    },
 })

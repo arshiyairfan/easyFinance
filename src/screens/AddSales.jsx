@@ -1,8 +1,33 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const AddSales = () => {
+
+    const [Name,setName]=useState();
+    const [Voucher,setVoucher]=useState();
+    const [Party,setParty]=useState();
+    const [Narration,setNarration]=useState();
+    const [Item,setItem]=useState();
+    const [Quantity,setQuantity]=useState();
+    const [Unit,setUnit]=useState();
+    const [Price,setPrice]=useState();
+    const [Amount,setAmount]=useState();
+    const print=()=>{
+        const SalesData={
+            Name,
+            Voucher,
+            Party,
+            Narration,
+            Item,
+            Quantity,
+            Unit,
+            Price,
+            Amount
+        }
+        console.log(SalesData)
+    }
+
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
@@ -18,7 +43,9 @@ const AddSales = () => {
                     <Text style={styles.textStyle}>Date</Text>
                     <TextInput style={styles.box}
                         placeholder="Name"
-                        selection={{ start: 0, end: 0 }}
+                        value={Name}
+                        onChangeText={setName}
+
                     ></TextInput>
 
 
@@ -27,55 +54,64 @@ const AddSales = () => {
 
                         placeholder="Voucher No"
                         selection={{ start: 0, end: 0 }}
+                        value={Voucher}
+                        onChangeText={setVoucher}
                     ></TextInput>
 
 
                     <Text style={styles.textStyle}>Party </Text>
                     <TextInput style={styles.box}
                         placeholder="Party name"
-                        selection={{ start: 0, end: 0 }}
+                        value={Party}
+                        onChangeText={setParty}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Narration</Text>
                     <TextInput style={styles.box}
                         placeholder="Bill and book no"
-                        selection={{ start: 0, end: 0 }}
+                       value={Narration}
+                       onChangeText={setNarration}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Item</Text>
                     <TextInput style={styles.box}
                         placeholder="Item name"
-                        selection={{ start: 0, end: 0 }}
+                        value={Item}
+                        onChangeText={setItem}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Quantity</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Quantity"
-                        selection={{ start: 0, end: 0 }}
+                        value={Quantity}
+                        onChangeText={setQuantity}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Unit</Text>
                     <TextInput style={styles.box}
                         placeholder="Pcs/Set/Dozen"
-                        selection={{ start: 0, end: 0 }}
+                        value={Unit}
+                        onChangeText={setUnit}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Price</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Price"
-                        selection={{ start: 0, end: 0 }}
+                        value={Price}
+                        onChangeText={setPrice}
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Amount</Text>
                     <TextInput style={styles.box}
                         placeholder="   "
-                        selection={{ start: 0, end: 0 }}
+                        value={Amount}
+                        onChangeText={setAmount}
                     ></TextInput>
 
 
 
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={print}>
                         <Text style={styles.buttonText}>save</Text>
                     </TouchableOpacity>
 

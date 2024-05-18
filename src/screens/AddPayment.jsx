@@ -22,7 +22,6 @@ const AddPayment = () => {
             Narration
         }
         console.log(data)
-
     }
 
     return (
