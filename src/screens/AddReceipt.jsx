@@ -1,34 +1,42 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
+import Dropdown from '../components/Dropdown';
 
-
+const optionsDC = [
+    { label: 'Credit', value: '1' },
+    { label: 'Debit', value: '2' },
+    // Add more options as needed
+];
 
 
 const AddReceipt = () => {
 
 
     const [Date, setDate] = useState();
-const [Voucher, setVoucher] = useState();
-const [DC, setDC] = useState();
-const [Account, setAccount] = useState();
-const [Debit, setDebit] = useState();
-const [Credit, setCredit] = useState();
-const [Narration, setNarration] = useState();
+    const [Voucher, setVoucher] = useState();
+    const [DC, setDC] = useState();
+    const [Account, setAccount] = useState();
+    const [Debit, setDebit] = useState();
+    const [Credit, setCredit] = useState();
+    const [Narration, setNarration] = useState();
 
+    const handleSelect = (optionsDC) => {
+        console.log('Selected option:', optionsDC);
+    };
 
-const print = () => {
-    const ReceiptData = {
+    const print = () => {
+        const ReceiptData = {
 
-        Date,
-        Voucher,
-        DC,
-        Account,
-        Debit,
-        Credit,
-        Narration
+            Date,
+            Voucher,
+            DC,
+            Account,
+            Debit,
+            Credit,
+            Narration
+        }
+        console.log(ReceiptData)
     }
-    console.log(ReceiptData)
-}
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -59,12 +67,8 @@ const print = () => {
 
 
                     <Text style={styles.textStyle}>D/C</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Debit/Credit"
-                        value={DC}
-                        onChangeText={setDC}
+                    <Dropdown options={optionsDC} onSelect={handleSelect} />
 
-                    ></TextInput>
 
                     <Text style={styles.textStyle}>Account</Text>
                     <TextInput style={styles.box}

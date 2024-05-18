@@ -1,6 +1,25 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import Dropdown from '../components/Dropdown';
+import SearchDropdown from '../components/SearchDropdown';
+
+
+const optionsUnit = [
+    { label: 'pcs', value: '1' },
+    { label: 'set', value: '2' },
+    { label: 'dozen', value: '2' },
+
+    // Add more options as needed
+];
+
+const optionsItem = [
+    { label: 'Basket', value: '1' },
+    { label: 'Table', value: '2' },
+    { label: 'Chair', value: '3' },
+    // Add more options as needed
+];
+
 
 const AddSales = () => {
 
@@ -13,6 +32,15 @@ const AddSales = () => {
     const [Unit,setUnit]=useState();
     const [Price,setPrice]=useState();
     const [Amount,setAmount]=useState();
+
+    const handleSelect = (optionsUnit) => {
+        console.log('Selected option:', optionsUnit);
+    };
+
+    const handleSelect2 = (optionsItem) => {
+        console.log('Selected option:', optionsItem);
+    };
+
     const print=()=>{
         const SalesData={
             Name,
@@ -74,11 +102,8 @@ const AddSales = () => {
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Item</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Item name"
-                        value={Item}
-                        onChangeText={setItem}
-                    ></TextInput>
+                    <SearchDropdown options={optionsItem} onSelect={handleSelect} />
+                    
 
                     <Text style={styles.textStyle}>Quantity</Text>
                     <TextInput style={styles.box}
@@ -88,11 +113,8 @@ const AddSales = () => {
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Unit</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Pcs/Set/Dozen"
-                        value={Unit}
-                        onChangeText={setUnit}
-                    ></TextInput>
+                    <Dropdown options={optionsUnit} onSelect={handleSelect} />
+                
 
                     <Text style={styles.textStyle}>Price</Text>
                     <TextInput style={styles.box}

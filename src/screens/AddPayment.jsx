@@ -1,5 +1,13 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
+import Dropdown from '../components/Dropdown';
+
+
+const optionsDC = [
+    { label: 'Credit', value: '1' },
+    { label: 'Debit', value: '2' },
+    // Add more options as needed
+];
 
 
 const AddPayment = () => {
@@ -23,6 +31,10 @@ const AddPayment = () => {
         }
         console.log(data)
     }
+
+    const handleSelect = (optionsDC) => {
+        console.log('Selected option:', optionsDC);
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -52,11 +64,8 @@ const AddPayment = () => {
 
 
                     <Text style={styles.textStyle}>D/C</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Debit/Credit"
-                        value={DC}
-                        onChangeText={setDC}
-                    ></TextInput>
+                    <Dropdown options={optionsDC} onSelect={handleSelect} />
+                    
 
                     <Text style={styles.textStyle}>Account</Text>
                     <TextInput style={styles.box}

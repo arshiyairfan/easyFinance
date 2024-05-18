@@ -1,14 +1,29 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import SearchDropdown from '../components/SearchDropdown';
+import Dropdown from '../components/Dropdown';
 
 
- const options = [
-        { label: 'Option 1', value: '1' },
-        { label: 'Option 2', value: '2' },
-        { label: 'Option 3', value: '3' },
-        // Add more options as needed
-    ];
+const optionsItem = [
+    { label: 'Basket', value: '1' },
+    { label: 'Table', value: '2' },
+    { label: 'Chair', value: '3' },
+    // Add more options as needed
+];
+
+const optionsGroup = [
+    { label: 'Creditor', value: '1' },
+    { label: 'Debitor', value: '2' },
+    // Add more options as needed
+];
+
+const optionsUnit = [
+    { label: 'pcs', value: '1' },
+    { label: 'set', value: '2' },
+    { label: 'dozen', value: '3' },
+
+    // Add more options as needed
+];
 
 const AddItem = () => {
     const [Name, setName] = useState();
@@ -17,16 +32,23 @@ const AddItem = () => {
     const [Quantity, setQuantity] = useState();
     const [SalePrice, setSalePrice] = useState();
 
-   
 
-    const handleSelect = (option) => {
-        console.log('Selected option:', option);
+
+    const handleSelect = (optionsItem) => {
+        console.log('Selected option:', optionsItem);
     };
 
+    const handleSelect2 = (optionsGroup) => {
+        console.log('Selected option:', optionsGroup);
+    };
+
+    const handleSelect3 = (optionsUnit) => {
+        console.log('Selected option:', optionsUnit);
+    };
 
     const print = () => {
 
-      
+
 
         const itemData = {
             Name,
@@ -48,24 +70,17 @@ const AddItem = () => {
                     <Text style={styles.headingText}> Add Item </Text>
 
                     <Text style={styles.textStyle}>Name</Text>
-                    <SearchDropdown options={options} onSelect={handleSelect} />
+                    <SearchDropdown options={optionsItem} onSelect={handleSelect} />
 
 
                     <Text style={styles.textStyle}>Group</Text>
-                    <TextInput style={styles.box}
+                    <Dropdown options={optionsGroup} onSelect={handleSelect2} />
 
-                        placeholder="Creditor/Debitor"
-                        value={Group}
-                        onChangeText={setGroup}
-                    ></TextInput>
 
 
                     <Text style={styles.textStyle}>Unit</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Pcs/Set/Dozen"
-                        value={Unit}
-                        onChangeText={setUnit}
-                    ></TextInput>
+                    <Dropdown options={optionsUnit} onSelect={handleSelect3} />
+                   
 
                     <Text style={styles.textStyle}>Stock (Qty)</Text>
                     <TextInput style={styles.box}
