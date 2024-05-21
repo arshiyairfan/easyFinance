@@ -21,7 +21,7 @@ const AddAccount = () => {
     }
 
     const handleSelect = (option) => {
-        console.log('Selected option:', option);
+        setGroup(option.label)
     };
 
     const print = () => {

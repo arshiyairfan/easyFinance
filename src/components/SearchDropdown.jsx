@@ -45,7 +45,7 @@ const SearchDropdown = ({ options, onSelect }) => {
         onRequestClose={() => setVisible(false)}
       >
         <TouchableOpacity
-          style={styles.overlay}
+          style={styles.overlay}  
           onPress={() => setVisible(false)}
         >
           <View style={styles.modal}>

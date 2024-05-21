@@ -21,7 +21,7 @@ const AddReceipt = () => {
     const [Narration, setNarration] = useState();
 
     const handleSelect = (optionsDC) => {
-        console.log('Selected option:', optionsDC);
+        setDC(optionsDC.label)
     };
 
     const print = () => {
@@ -59,7 +59,7 @@ const AddReceipt = () => {
                     <Text style={styles.textStyle}>Vch no.</Text>
                     <TextInput style={styles.box}
                         placeholder="Enter Voucher no."
-                        selection={{ start: 0, end: 0 }}
+                       
                         value={Voucher}
                         onChangeText={setVoucher}
 

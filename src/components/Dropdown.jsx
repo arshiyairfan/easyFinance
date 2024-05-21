@@ -13,12 +13,14 @@ const Dropdown = ({ options, onSelect }) => {
   const [visible, setVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
+  const handleSelect = (item) => {
+    setSelectedOption(item);
     setVisible(false);
     if (onSelect) {
-      onSelect(option);
+      onSelect(item);
+  
     }
+    
   };
 
   return (

@@ -8,7 +8,7 @@ import SearchDropdown from '../components/SearchDropdown';
 const optionsUnit = [
     { label: 'pcs', value: '1' },
     { label: 'set', value: '2' },
-    { label: 'dozen', value: '2' },
+    { label: 'dozen', value: '3' },
 
     // Add more options as needed
 ];
@@ -34,11 +34,11 @@ const AddSales = () => {
     const [Amount,setAmount]=useState();
 
     const handleSelect = (optionsUnit) => {
-        console.log('Selected option:', optionsUnit);
+   setUnit(optionsUnit.label)
     };
 
     const handleSelect2 = (optionsItem) => {
-        console.log('Selected option:', optionsItem);
+        setItem(optionsItem.label)
     };
 
     const print=()=>{
@@ -70,7 +70,7 @@ const AddSales = () => {
 
                     <Text style={styles.textStyle}>Date</Text>
                     <TextInput style={styles.box}
-                        placeholder="Name"
+                        placeholder="Enter date"
                         value={Name}
                         onChangeText={setName}
 
@@ -81,7 +81,6 @@ const AddSales = () => {
                     <TextInput style={styles.box}
 
                         placeholder="Voucher No"
-                        selection={{ start: 0, end: 0 }}
                         value={Voucher}
                         onChangeText={setVoucher}
                     ></TextInput>
@@ -102,7 +101,7 @@ const AddSales = () => {
                     ></TextInput>
 
                     <Text style={styles.textStyle}>Item</Text>
-                    <SearchDropdown options={optionsItem} onSelect={handleSelect} />
+                    <SearchDropdown options={optionsItem} onSelect={handleSelect2} />
                     
 
                     <Text style={styles.textStyle}>Quantity</Text>

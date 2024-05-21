@@ -4,12 +4,6 @@ import SearchDropdown from '../components/SearchDropdown';
 import Dropdown from '../components/Dropdown';
 
 
-const optionsItem = [
-    { label: 'Basket', value: '1' },
-    { label: 'Table', value: '2' },
-    { label: 'Chair', value: '3' },
-    // Add more options as needed
-];
 
 const optionsGroup = [
     { label: 'Creditor', value: '1' },
@@ -34,20 +28,15 @@ const AddItem = () => {
 
 
 
-    const handleSelect = (optionsItem) => {
-        console.log('Selected option:', optionsItem);
-    };
-
     const handleSelect2 = (optionsGroup) => {
-        console.log('Selected option:', optionsGroup);
+        setGroup(optionsGroup.label)
     };
 
     const handleSelect3 = (optionsUnit) => {
-        console.log('Selected option:', optionsUnit);
+        setUnit(optionsUnit.label)
     };
 
     const print = () => {
-
 
 
         const itemData = {
@@ -70,7 +59,12 @@ const AddItem = () => {
                     <Text style={styles.headingText}> Add Item </Text>
 
                     <Text style={styles.textStyle}>Name</Text>
-                    <SearchDropdown options={optionsItem} onSelect={handleSelect} />
+                    <TextInput style={styles.box}
+                        placeholder="Enter Name"
+                        value={Name}
+                        onChangeText={setName}
+                    ></TextInput>
+
 
 
                     <Text style={styles.textStyle}>Group</Text>

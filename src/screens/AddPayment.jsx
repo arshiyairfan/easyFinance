@@ -9,6 +9,13 @@ const optionsDC = [
     // Add more options as needed
 ];
 
+const names = [
+    { label: 'jahanzaib', value: '1' },
+    { label: 'arshia', value: '2' },
+    { label: 'muqeet', value: '2' },
+    { label: 'ali', value: '2' },
+    { label: 'haiser', value: '2' },
+];
 
 const AddPayment = () => {
     const [name,setName]=useState();
@@ -32,17 +39,10 @@ const AddPayment = () => {
         console.log(data)
     }
 
-    const handleSelect = (option) => {
-        console.log('Selected option:', option);
+    const Select = (option) => {
         setDC(option.label)
-       
-        
     };
     
-   
-        
-    
-   
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -73,7 +73,7 @@ const AddPayment = () => {
 
 
                     <Text style={styles.textStyle}>D/C</Text>
-                    <Dropdown options={optionsDC} onSelect={handleSelect}
+                    <Dropdown options={optionsDC} onSelect={Select}
                     
                     />
                     
