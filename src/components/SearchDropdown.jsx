@@ -104,11 +104,12 @@ const styles = StyleSheet.create({
     },
   
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
+    color: "#4D6366",
+    
+    shadowColor: '#000000',
+    fontSize: 17,
     padding: 18,
-    marginLeft:75
+    
   },
   overlay: {
     flex: 1,

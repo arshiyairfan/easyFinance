@@ -32,15 +32,24 @@ const AddPayment = () => {
         console.log(data)
     }
 
-    const handleSelect = (optionsDC) => {
-        console.log('Selected option:', optionsDC);
+    const handleSelect = (option) => {
+        console.log('Selected option:', option);
+        setDC(option.label)
+       
+        
     };
+    
+   
+        
+    
+   
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
                 <View style={{ flex: 1, backgroundColor: colors.primary }}>
+                    
                     
 
                     <Text style={styles.headingText}> Add Payment</Text>
@@ -64,7 +73,9 @@ const AddPayment = () => {
 
 
                     <Text style={styles.textStyle}>D/C</Text>
-                    <Dropdown options={optionsDC} onSelect={handleSelect} />
+                    <Dropdown options={optionsDC} onSelect={handleSelect}
+                    
+                    />
                     
 
                     <Text style={styles.textStyle}>Account</Text>
@@ -133,7 +144,7 @@ const styles = StyleSheet.create({
     box: {
         height: 60,
         width: 330,
-        color: 'white',
+        color: "#4D6366",
         marginLeft: 40,
         marginRight: 60,
         backgroundColor: colors.dark,

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     box: {
         height: 60,
         width: 330,
-        color: 'white',
+        color: "#4D6366",
         marginLeft: 40,
         marginRight: 60,
         backgroundColor: colors.dark,
