@@ -8,6 +8,7 @@ import AddReceipt from './src/screens/AddReceipt';
 import AddSales from './src/screens/AddSales';
 import AddPayment from './src/screens/AddPayment';
 import DashBoard from './src/screens/DashBoard';
+import AddPurchase from './src/screens/AddPurchase';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
         <Stack.Screen name="Add Receipt" component={AddReceipt} />
         <Stack.Screen name="Add Sales" component={AddSales} />
         <Stack.Screen name="Add Payment" component={AddPayment} />
+        <Stack.Screen name="Add Purchase" component={AddPurchase}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

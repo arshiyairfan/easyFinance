@@ -3,19 +3,41 @@ import React, { useState } from 'react'
 import colors from '../constants/globalStyles'
 import { useNavigation } from '@react-navigation/native'
 import Dropdown from '../components/Dropdown'
+import firestore from '@react-native-firebase/firestore'
 
 
 const options = [
-    { label: 'Debitor', value: '1' },
-    { label: 'Creditor', value: '2' },
+    { label: 'debitor', value: '1' },
+    { label: 'creditor', value: '2' },
 
 ];
+
+
 
 
 const AddAccount = () => {
     const navigation = useNavigation();
     const [name, setName] = useState();
     const [group, setGroup] = useState();
+
+
+    const addCategory = async () => {
+        try {
+            await firestore().collection("account").add({
+                name: name,
+                group: group,
+                balance:0
+            });
+            setName(''),
+            setGroup('')
+            console.log("Document successfully written!");
+        } catch (error) {
+            console.error("Error writing document: ", error);
+        }
+    };
+    
+
+
     const navigate = () => {
         navigation.navigate("Add Item")
     }
@@ -46,7 +68,7 @@ const AddAccount = () => {
             <Text style={styles.textStyle}>Group</Text>
             <Dropdown  options={options} onSelect={handleSelect} />
 
-            <TouchableOpacity style={styles.button} onPress={print}>
+            <TouchableOpacity style={styles.button} onPress={addCategory}>
                 <Text style={styles.buttonText}>save</Text>
             </TouchableOpacity>
 

@@ -33,6 +33,10 @@ const DashBoard = () => {
                 <Text style={styles.buttonText}>Add Receipt </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={styles.button} onPress={() => navigate("Add Purchase")}>
+                <Text style={styles.buttonText}>Add Purchase </Text>
+            </TouchableOpacity>
+
 
             <TouchableOpacity style={styles.button} onPress={() => navigate("Add Sales")}>
                 <Text style={styles.buttonText}>Add Sales</Text>

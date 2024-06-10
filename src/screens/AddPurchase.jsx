@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+
+import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import Dropdown from '../components/Dropdown';
 import SearchDropdown from '../components/SearchDropdown';
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import DatePicker from '../components/DatePicker';
 
 
 
@@ -22,10 +24,17 @@ const optionsItem = [
     // Add more options as needed
 ];
 
+const optionsParty = [
+    { label: 'Basket', value: '1' },
+    { label: 'Table', value: '2' },
+    { label: 'Chair', value: '3' },
+    // Add more options as needed
+];
 
-const AddSales = () => {
 
-    const [Name, setName] = useState();
+const AddPurchase = () => {
+
+    const [date, setDate] = useState(new Date());
     const [Voucher, setVoucher] = useState();
     const [Party, setParty] = useState();
     const [Narration, setNarration] = useState();
@@ -34,22 +43,63 @@ const AddSales = () => {
     const [Unit, setUnit] = useState();
     const [Price, setPrice] = useState();
     const [Amount, setAmount] = useState();
+    const [partyOptions, setPartyOptions] = useState()
+    const [itemOtions, setItemOptions] = useState()
+    const [loader, setloader] = useState(false)
+
+    useEffect(() => {
+        getCreditors()
+        getItems()
+    }, [])
+    const getCreditors = async () => {
+        try {
+            const snap = await firestore().collection("account").where("group", "==", "creditor").get();
+            const data = snap.docs.map(doc => {
+                const id = doc.id;
+                const data = doc.data()
+                return { label: data.name, value: id }
+            })
+            console.log(data)
+            setPartyOptions(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getItems = async () => {
+        try {
+            const snap = await firestore().collection("item").get();
+            const data = snap.docs.map(doc => {
+                const id = doc.id;
+                const data = doc.data()
+                return { label: data.name, value: id }
+            })
+            console.log(data)
+            setItemOptions(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const addCategory = async () => {
         try {
-            await firestore().collection("AddSales").add({
-                Name: Name,
-                Voucher: Voucher,
-                Party: Party,
-                Narration: Narration,
-                Item: Item,
-                Quantity: Quantity,
-                Unit: Unit,
-                Price: Price,
-                Amount: Amount
+            await firestore().collection("purchase").add({
+                date: date,
+                voucher: Voucher,
+                party: Party,
+                narration: Narration,
+                item: Item,
+                quantity: Quantity,
+                unit: Unit,
+                price: Price,
+                amount: Amount
             });
+            setloader(true);
             console.log("Document successfully written!");
+            ToastAndroid.showWithGravity('Purchase Added Successfully...!', ToastAndroid.SHORT, ToastAndroid.TOP)
+            setloader(false);
         } catch (error) {
+            setloader(true);
             console.error("Error writing document: ", error);
         }
     };
@@ -59,11 +109,16 @@ const AddSales = () => {
     };
 
     const handleSelect2 = (optionsItem) => {
-        setItem(optionsItem.label)
+        setItem(optionsItem.value)
+    };
+
+    const handleSelectParty = (optionsParty) => {
+        setParty(optionsParty.value)
+        console.log(optionsParty)
     };
 
     const print = () => {
-        const SalesData = {
+        const PurchaseData = {
             Name,
             Voucher,
             Party,
@@ -74,7 +129,7 @@ const AddSales = () => {
             Price,
             Amount
         }
-        console.log(SalesData)
+        console.log(PurchaseData)
     }
 
     return (
@@ -87,15 +142,11 @@ const AddSales = () => {
 
 
 
-                    <Text style={styles.headingText}> Add Sales</Text>
+                    <Text style={styles.headingText}> Add Purchase</Text>
 
                     <Text style={styles.textStyle}>Date</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Enter date"
-                        value={Name}
-                        onChangeText={setName}
-
-                    ></TextInput>
+                   <DatePicker setDate={setDate} date={date}></DatePicker>
+                   
 
 
                     <Text style={styles.textStyle}>Vch No.</Text>
@@ -107,12 +158,12 @@ const AddSales = () => {
                     ></TextInput>
 
 
+
                     <Text style={styles.textStyle}>Party </Text>
-                    <TextInput style={styles.box}
-                        placeholder="Party name"
-                        value={Party}
-                        onChangeText={setParty}
-                    ></TextInput>
+                    {partyOptions &&
+                        <Dropdown options={partyOptions} onSelect={handleSelectParty} />
+                    }
+
 
                     <Text style={styles.textStyle}>Narration</Text>
                     <TextInput style={styles.box}
@@ -120,10 +171,11 @@ const AddSales = () => {
                         value={Narration}
                         onChangeText={setNarration}
                     ></TextInput>
-
                     <Text style={styles.textStyle}>Item</Text>
-                    <SearchDropdown options={optionsItem} onSelect={handleSelect2} />
+                    {itemOtions &&
 
+                        <SearchDropdown options={itemOtions} onSelect={handleSelect2} />
+                    }
 
                     <Text style={styles.textStyle}>Quantity</Text>
                     <TextInput style={styles.box}
@@ -134,7 +186,6 @@ const AddSales = () => {
 
                     <Text style={styles.textStyle}>Unit</Text>
                     <Dropdown options={optionsUnit} onSelect={handleSelect} />
-
 
                     <Text style={styles.textStyle}>Price</Text>
                     <TextInput style={styles.box}
@@ -150,9 +201,8 @@ const AddSales = () => {
                         onChangeText={setAmount}
                     ></TextInput>
 
-
-                    <TouchableOpacity style={styles.button} onPress={addCategory}>
-                        <Text style={styles.buttonText}>save</Text>
+                    <TouchableOpacity style={styles.button} disabled={loader} onPress={addCategory}>
+                        {loader ? (<ActivityIndicator />) : (<Text style={styles.buttonText}>save</Text>)}
                     </TouchableOpacity>
 
                 </View>
@@ -161,7 +211,7 @@ const AddSales = () => {
     )
 }
 
-export default AddSales
+export default AddPurchase
 
 const styles = StyleSheet.create({
 

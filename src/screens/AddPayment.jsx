@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import Dropdown from '../components/Dropdown';
+import firestore from '@react-native-firebase/firestore'
 
 
 const optionsDC = [
@@ -26,6 +27,25 @@ const AddPayment = () => {
     const [Credit,setCredit]=useState();
     const [Narration,setNarration]=useState();
     
+    const addCategory = async () => {
+        try {
+            await firestore().collection("AddPayment").add({
+               Name:name,
+               Voucher:voucher,
+               DC:DC,
+               Account:Account,
+               Debit:Debit,
+               Credit:Credit,
+               Narration:Narration
+            });
+            console.log("Document successfully written!");
+        } catch (error) {
+            console.error("Error writing document: ", error);
+        }
+    };
+    
+
+
     const print=()=>{
         const data={
             name,
@@ -107,9 +127,9 @@ const AddPayment = () => {
                     ></TextInput>
 
 
-                    <TouchableOpacity style={styles.button} onPress={print}>
+                    <TouchableOpacity style={styles.button} onPress={addCategory}>
                         <Text style={styles.buttonText}>save</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> 
 
                 </View>
             </ScrollView>

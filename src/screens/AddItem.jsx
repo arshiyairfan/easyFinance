@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, Scr
 import React, { useState } from 'react'
 import SearchDropdown from '../components/SearchDropdown';
 import Dropdown from '../components/Dropdown';
+import firestore from '@react-native-firebase/firestore'
 
 
 
@@ -27,6 +28,26 @@ const AddItem = () => {
     const [SalePrice, setSalePrice] = useState();
 
 
+    const addCategory = async () => {
+        try {
+            await firestore().collection("item").add({
+               name: Name,
+               unit:Unit,
+               quantity:Quantity,
+               salePrice:SalePrice
+            });
+            setName(''),
+            setGroup(''),
+            setUnit(''),
+            setQuantity(''),
+            setSalePrice('')
+
+            console.log("Document successfully written!");
+        } catch (error) {
+            console.error("Error writing document: ", error);
+        }
+    };
+    
 
     const handleSelect2 = (optionsGroup) => {
         setGroup(optionsGroup.label)
@@ -66,9 +87,9 @@ const AddItem = () => {
                     ></TextInput>
 
 
-
+{/* 
                     <Text style={styles.textStyle}>Group</Text>
-                    <Dropdown options={optionsGroup} onSelect={handleSelect2} />
+                    <Dropdown options={optionsGroup} onSelect={handleSelect2} /> */}
 
 
 
@@ -91,7 +112,7 @@ const AddItem = () => {
                     ></TextInput>
 
 
-                    <TouchableOpacity style={styles.button} onPress={print}>
+                    <TouchableOpacity style={styles.button} onPress={addCategory}>
                         <Text style={styles.buttonText}>save</Text>
                     </TouchableOpacity>
 

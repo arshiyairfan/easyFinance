@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "662882177680",
+    "project_id": "easyfinance-c2b84",
+    "storage_bucket": "easyfinance-c2b84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662882177680:android:04825c7f4c4b95fce0fe15",
+        "android_client_info": {
+          "package_name": "com.easyfinance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqtFbsBG2H8eGtVIY8IObjeUJpHpTPSao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
