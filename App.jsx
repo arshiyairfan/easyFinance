@@ -9,6 +9,7 @@ import AddSales from './src/screens/AddSales';
 import AddPayment from './src/screens/AddPayment';
 import DashBoard from './src/screens/DashBoard';
 import AddPurchase from './src/screens/AddPurchase';
+import PredictionScreen from './src/screens/Prediction';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name="Add Sales" component={AddSales} />
         <Stack.Screen name="Add Payment" component={AddPayment} />
         <Stack.Screen name="Add Purchase" component={AddPurchase}/>
+        <Stack.Screen name="Prediction" component={PredictionScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

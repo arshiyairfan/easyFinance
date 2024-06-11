@@ -90,6 +90,22 @@ const AddPurchase = () => {
         }
     };
 
+    const getLedgerEntries = async () => {
+        try {
+            const purchaseSnap = await firestore().collection("Purchase").get();
+            const paymentSnap = await firestore().collection("Payment").get();
+    
+            const purchases = purchaseSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const payments = paymentSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+            return { purchases, payments };
+        } catch (error) {
+            console.error("Error fetching ledger entries: ", error);
+            throw error;
+        }
+    };
+    
+
     const handleSelect = (optionsUnit) => {
         setUnit(optionsUnit.label);
     };

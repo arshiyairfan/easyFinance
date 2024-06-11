@@ -69,6 +69,17 @@ const AddSales = () => {
     const addCategory = async () => {
         try {
             setLoader(true);
+            console.log("data to store : ",{
+                date: date,
+                voucher: Voucher,
+                party: Party,
+                narration: Narration,
+                item: Item,
+                quantity: Quantity,
+                unit: Unit,
+                price: Price,
+                amount: Amount
+            })
             await firestore().collection("sales").add({
                 date: date,
                 voucher: Voucher,

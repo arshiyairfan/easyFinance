@@ -1,166 +1,139 @@
-import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ToastAndroid } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
-import firestore from '@react-native-firebase/firestore'
-
+import firestore from '@react-native-firebase/firestore';
+import DatePicker from '../components/DatePicker';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const optionsDC = [
     { label: 'Credit', value: '1' },
     { label: 'Debit', value: '2' },
-    // Add more options as needed
-];
-
-const names = [
-    { label: 'jahanzaib', value: '1' },
-    { label: 'arshia', value: '2' },
-    { label: 'muqeet', value: '2' },
-    { label: 'ali', value: '2' },
-    { label: 'haiser', value: '2' },
 ];
 
 const AddPayment = () => {
-    const [name,setName]=useState();
-    const [voucher,setVoucher]=useState();
-    const [DC,setDC]=useState();
-    const [Account,setAccount]=useState();
-    const [Debit,setDebit]=useState();
-    const [Credit,setCredit]=useState();
-    const [Narration,setNarration]=useState();
-    
-    const addCategory = async () => {
+    const [date, setDate] = useState(new Date());
+    const [voucher, setVoucher] = useState('');
+    const [DC, setDC] = useState('');
+    const [account, setAccount] = useState('');
+    const [debit, setDebit] = useState('');
+    const [credit, setCredit] = useState('');
+    const [narration, setNarration] = useState('');
+    const [accountOptions, setAccountOptions] = useState([]);
+    const [loader, setLoader] = useState(false);
+
+    useEffect(() => {
+        getCreditors();
+    }, []);
+
+    const getCreditors = async () => {
         try {
-            await firestore().collection("AddPayment").add({
-               Name:name,
-               Voucher:voucher,
-               DC:DC,
-               Account:Account,
-               Debit:Debit,
-               Credit:Credit,
-               Narration:Narration
-            });
-            console.log("Document successfully written!");
+            const snap = await firestore().collection("account").where("group", "==", "creditor").get();
+            const data = snap.docs.map(doc => ({
+                label: doc.data().name,
+                value: doc.id
+            }));
+            setAccountOptions(data);
         } catch (error) {
-            console.error("Error writing document: ", error);
+            console.log(error);
         }
-    };
-    
-
-
-    const print=()=>{
-        const data={
-            name,
-            voucher,
-            DC,
-            Account,
-            Debit,
-            Credit,
-            Narration
-        }
-        console.log(data)
     }
 
-    const Select = (option) => {
-        setDC(option.label)
+    const addCategory = async () => {
+        setLoader(true);
+        try {
+            await firestore().collection("Payment").add({
+                date,
+                voucher,
+                DC,
+                account,
+                debit,
+                credit,
+                narration
+            });
+            setLoader(true);
+            console.log("Document successfully written!");
+            ToastAndroid.showWithGravity('Payment Added Successfully...!', ToastAndroid.SHORT, ToastAndroid.TOP);
+            setLoader(false);
+
+        } catch (error) {
+            setLoader(true);
+            console.error("Error writing document: ", error);
+        } finally {
+            setLoader(false);
+        }
     };
-    
+
+    const selectDC = (option) => {
+        setDC(option.label);
+    };
+
+    const handleSelectAccount = (option) => {
+        setAccount(option.value);
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
-
                 <View style={{ flex: 1, backgroundColor: colors.primary }}>
-                    
-                    
-
                     <Text style={styles.headingText}> Add Payment</Text>
 
                     <Text style={styles.textStyle}>Date</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Enter Date"
-                        value={name}
-                        onChangeText={setName}
-                    ></TextInput>
-
+                    <DatePicker setDate={setDate} date={date} />
 
                     <Text style={styles.textStyle}>Vch No.</Text>
-                    <TextInput style={styles.box}
-
+                    <TextInput
+                        style={styles.box}
                         placeholder="Enter Voucher No."
                         value={voucher}
                         onChangeText={setVoucher}
-
-                    ></TextInput>
-
+                    />
 
                     <Text style={styles.textStyle}>D/C</Text>
-                    <Dropdown options={optionsDC} onSelect={Select}
-                    
-                    />
-                    
+                    <Dropdown options={optionsDC} onSelect={selectDC} />
 
                     <Text style={styles.textStyle}>Account</Text>
-                    <TextInput style={styles.box}
-                        placeholder="Account"
-                        value={Account}
-                        onChangeText={setAccount}
-                    ></TextInput>
+                    {accountOptions.length > 0 && (
+                        <Dropdown options={accountOptions} onSelect={handleSelectAccount} />
+                    )}
 
                     <Text style={styles.textStyle}>Debit (Rs.)</Text>
-                    <TextInput style={styles.box}
+                    <TextInput
+                        style={styles.box}
                         placeholder="Enter Price"
-                        value={Debit}
+                        value={debit}
                         onChangeText={setDebit}
-                    ></TextInput>
+                        keyboardType="numeric"
+                    />
 
                     <Text style={styles.textStyle}>Credit (Rs.)</Text>
-                    <TextInput style={styles.box}
-                        placeholder=" Enter Price"
-                        value={Credit}
+                    <TextInput
+                        style={styles.box}
+                        placeholder="Enter Price"
+                        value={credit}
                         onChangeText={setCredit}
-                    ></TextInput>
+                        keyboardType="numeric"
+                    />
 
                     <Text style={styles.textStyle}>Short Narrations</Text>
-                    <TextInput style={styles.box}
-                        placeholder=" Bill and Book no."
-                        value={Narration}
+                    <TextInput
+                        style={styles.box}
+                        placeholder="Bill and Book no."
+                        value={narration}
                         onChangeText={setNarration}
-                    ></TextInput>
+                    />
 
-
-                    <TouchableOpacity style={styles.button} onPress={addCategory}>
-                        <Text style={styles.buttonText}>save</Text>
-                    </TouchableOpacity> 
-
+                    <TouchableOpacity style={styles.button} onPress={addCategory} disabled={loader}>
+                        <Text style={styles.buttonText}>Save</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
-    )
+    );
 }
 
-export default AddPayment
+export default AddPayment;
 
 const styles = StyleSheet.create({
-    semiCircle: {
-        width: 420,
-        height: 200,
-        borderBottomLeftRadius: 220,
-        borderBottomRightRadius: 220,
-        backgroundColor: 'transparent', // Transparent background
-        borderBottomWidth: 200, // Height of the semi-circle
-        borderBottomColor: colors.dark, // Same color as the background
-        top: 0,
-        shadowColor: '#00000',
-        shadowOffset: {
-            width: 2,
-            height: 5,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.84,
-        elevation: 10,
-        marginBottom: 26
-
-    },
-
     box: {
         height: 60,
         width: 330,
@@ -176,19 +149,16 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 9, // for Android,
+        elevation: 9,
         fontSize: 17,
-        paddingLeft:20
-        
+        paddingLeft: 20
     },
     textStyle: {
-
         color: 'white',
         marginLeft: 40,
         padding: 8,
         fontWeight: 'bold',
         fontSize: 18
-
     },
     button: {
         height: 60,
@@ -204,7 +174,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 9, // for Android
+        elevation: 9,
         marginTop: 45,
         marginBottom: 40
     },
@@ -221,13 +191,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 95,
         marginBottom: 25,
-        marginTop:50
-    },
-    scrollView: {
-        backgroundColor: 'pink',
-        marginHorizontal: 20,
+        marginTop: 50
     },
     scrollViewContent: {
         flexGrow: 1,
     },
-})
+});
