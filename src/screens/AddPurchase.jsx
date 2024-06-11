@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native'
+import { Button,StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import Dropdown from '../components/Dropdown';
 import SearchDropdown from '../components/SearchDropdown';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from '../components/DatePicker';
+import { useNavigation } from '@react-navigation/native';
+import DashBoard from './DashBoard';
 
 const optionsUnit = [
     { label: 'pcs', value: '1' },
@@ -14,6 +16,8 @@ const optionsUnit = [
 ];
 
 const AddPurchase = () => {
+
+    const navigation = useNavigation();
     const [date, setDate] = useState(new Date());
     const [Voucher, setVoucher] = useState();
     const [Party, setParty] = useState();
@@ -28,7 +32,7 @@ const AddPurchase = () => {
     const [loader, setLoader] = useState(false);
 
     useEffect(() => {
-        
+
         getCreditors();
         getItems();
     }, []);
@@ -94,17 +98,17 @@ const AddPurchase = () => {
         try {
             const purchaseSnap = await firestore().collection("Purchase").get();
             const paymentSnap = await firestore().collection("Payment").get();
-    
+
             const purchases = purchaseSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             const payments = paymentSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
+
             return { purchases, payments };
         } catch (error) {
             console.error("Error fetching ledger entries: ", error);
             throw error;
         }
     };
-    
+
 
     const handleSelect = (optionsUnit) => {
         setUnit(optionsUnit.label);
@@ -132,7 +136,7 @@ const AddPurchase = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                <View style={{ flex: 1,backgroundColor: colors.primary }}>
+                <View style={{ flex: 1, backgroundColor: colors.primary }}>
                     <Text style={styles.headingText}> Add Purchase</Text>
                     <Text style={styles.textStyle}>Date</Text>
                     <DatePicker setDate={setDate} date={date}></DatePicker>
@@ -178,9 +182,17 @@ const AddPurchase = () => {
                         value={Amount}
                         editable={false}
                     ></TextInput>
+                    
                     <TouchableOpacity style={styles.button} disabled={loader} onPress={addCategory}>
-                        {loader ? (<ActivityIndicator />) : (<Text style={styles.buttonText}>save</Text>)}
+                        {loader ? (<ActivityIndicator />) : (<Text style={styles.buttonText}>Save</Text>)}
                     </TouchableOpacity>
+                    <Button
+                        title="View Purchases"
+                        onPress={() => navigation.navigate('PurchaseList')}
+                    />
+
+
+
                 </View>
             </ScrollView>
         </SafeAreaView>

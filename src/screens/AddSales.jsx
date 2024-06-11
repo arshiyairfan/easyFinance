@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Dropdown from '../components/Dropdown';
 import SearchDropdown from '../components/SearchDropdown';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from '../components/DatePicker';
+import { useNavigation } from '@react-navigation/native';
+
 
 const optionsUnit = [
     { label: 'pcs', value: '1' },
@@ -14,6 +16,10 @@ const optionsUnit = [
 ];
 
 const AddSales = () => {
+
+
+    const navigation = useNavigation();
+
     const [date, setDate] = useState(new Date());
     const [Voucher, setVoucher] = useState('');
     const [Party, setParty] = useState('');
@@ -69,7 +75,7 @@ const AddSales = () => {
     const addCategory = async () => {
         try {
             setLoader(true);
-            console.log("data to store : ",{
+            console.log("data to store : ", {
                 date: date,
                 voucher: Voucher,
                 party: Party,
@@ -172,9 +178,13 @@ const AddSales = () => {
                         value={Amount}
                         editable={false}
                     ></TextInput>
-                    <TouchableOpacity style={styles.button} disabled={loader} onPress={addCategory}>
-                        {loader ? (<ActivityIndicator />) : (<Text style={styles.buttonText}>Save</Text>)}
+                    <TouchableOpacity style={styles.button} onPress={addCategory} disabled={loader}>
+                        <Text style={styles.buttonText}>Save</Text>
                     </TouchableOpacity>
+                    <Button
+                        title="View Sales"
+                        onPress={() => navigation.navigate('SalesList')}
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>

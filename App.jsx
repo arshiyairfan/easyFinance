@@ -10,6 +10,10 @@ import AddPayment from './src/screens/AddPayment';
 import DashBoard from './src/screens/DashBoard';
 import AddPurchase from './src/screens/AddPurchase';
 import PredictionScreen from './src/screens/Prediction';
+import PurchaseList from './src/screens/PurchaseList';
+import LedgerList from './src/screens/LedgerList';
+import SalesList from './src/screens/SalesList';
+import ReceiptList from './src/screens/ReceiptList';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +31,10 @@ export default function App() {
         <Stack.Screen name="Add Payment" component={AddPayment} />
         <Stack.Screen name="Add Purchase" component={AddPurchase}/>
         <Stack.Screen name="Prediction" component={PredictionScreen}/>
+        <Stack.Screen name="PurchaseList" component={PurchaseList} /> 
+        <Stack.Screen name="LedgerList" component={LedgerList} />
+        <Stack.Screen name="SalesList" component={SalesList}/>
+        <Stack.Screen name="ReceiptList" component={ReceiptList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

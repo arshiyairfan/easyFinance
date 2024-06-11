@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ToastAndroid } from 'react-native';
+import { Button,StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ToastAndroid } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from '../components/DatePicker';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const optionsDC = [
     { label: 'Credit', value: '1' },
@@ -11,6 +12,9 @@ const optionsDC = [
 ];
 
 const AddPayment = () => {
+
+    const navigation = useNavigation();
+
     const [date, setDate] = useState(new Date());
     const [voucher, setVoucher] = useState('');
     const [DC, setDC] = useState('');
@@ -60,6 +64,21 @@ const AddPayment = () => {
             console.error("Error writing document: ", error);
         } finally {
             setLoader(false);
+        }
+    };
+
+    const getLedgerEntries = async () => {
+        try {
+            const purchaseSnap = await firestore().collection("Purchase").get();
+            const paymentSnap = await firestore().collection("Payment").get();
+
+            const purchases = purchaseSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const payments = paymentSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            return { purchases, payments };
+        } catch (error) {
+            console.error("Error fetching ledger entries: ", error);
+            throw error;
         }
     };
 
@@ -125,6 +144,10 @@ const AddPayment = () => {
                     <TouchableOpacity style={styles.button} onPress={addCategory} disabled={loader}>
                         <Text style={styles.buttonText}>Save</Text>
                     </TouchableOpacity>
+                    <Button
+                        title="View Ledger"
+                        onPress={() => navigation.navigate('LedgerList')}
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>

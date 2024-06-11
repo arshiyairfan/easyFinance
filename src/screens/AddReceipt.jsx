@@ -1,17 +1,20 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ToastAndroid } from 'react-native';
+import { Button,StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, ToastAndroid } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Dropdown from '../components/Dropdown';
 import firestore from '@react-native-firebase/firestore';
 import DatePicker from '../components/DatePicker';
-import { Colors } from 'react-native/Libraries/NewAppScreen'
-
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const optionsDC = [
     { label: 'Credit', value: '1' },
     { label: 'Debit', value: '2' },
 ];
 
-const AddReceipt = () => {
+const AddReceipt = () => {  
+
+    const navigation = useNavigation();
+
     const [date, setDate] = useState(new Date());
     const [voucher, setVoucher] = useState('');
     const [DC, setDC] = useState('');
@@ -56,7 +59,7 @@ const AddReceipt = () => {
             ToastAndroid.showWithGravity('Receipt Added Successfully...!', ToastAndroid.SHORT, ToastAndroid.TOP);
             setLoader(false);
         } catch (error) {
-           
+
             console.error("Error writing document: ", error);
             setLoader(true);
         } finally {
@@ -64,7 +67,7 @@ const AddReceipt = () => {
         }
     };
 
-    
+
     const selectDC = (option) => {
         setDC(option.label);
     };
@@ -127,6 +130,10 @@ const AddReceipt = () => {
                     <TouchableOpacity style={styles.button} onPress={addCategory} disabled={loader}>
                         <Text style={styles.buttonText}>Save</Text>
                     </TouchableOpacity>
+                    <Button
+                        title="View Receipt List"
+                        onPress={() => navigation.navigate('ReceiptList')}
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>
