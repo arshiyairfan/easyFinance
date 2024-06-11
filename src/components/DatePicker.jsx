@@ -10,7 +10,7 @@ export default ({date,setDate}) => {
     <>
       <TouchableOpacity style={styles.button} onPress={() => setOpen(true)}>
         <View style={styles.buttonContent}>
-          
+
           <Text style={styles.buttonText}> Select Date </Text>
         </View>
       </TouchableOpacity>
@@ -34,34 +34,37 @@ export default ({date,setDate}) => {
 const styles = StyleSheet.create({
 
   button: {
-    height: 70,
-    width: 300,
-    marginTop: 30,
-    marginLeft: 60,
+    height: 60,
+    width: 330,
+    color: "#4D6366",
+    marginLeft: 40,
     marginRight: 60,
-    backgroundColor: '#A6EBE6',
-    borderRadius: 20,
+    backgroundColor: colors.dark,
+    borderRadius: 19,
     shadowColor: '#000000',
     shadowOffset: {
-      width: 0,
-      height: 2,
+        width: 0,
+        height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 9,
+    elevation: 9, // for Android,
+    fontSize: 15,
+    paddingLeft: 20,
+    fontSize: 17
   },
   buttonText: {
-    marginTop:10,
-    color: '#fff',
-    fontSize: 35,
-    textAlign: 'center',
-    justifyContent: 'center',
+    color: 'white',
+    marginRight: 40,
+    padding: 16,
+    fontWeight: 'bold',
+    fontSize: 18
   },
   buttonContent: {
     flexDirection: 'row', // Align text horizontally
     alignItems: 'center', // Align text vertically
     justifyContent: 'center',
-    
+
   },
   buttonText2: {
     color: '#000',
